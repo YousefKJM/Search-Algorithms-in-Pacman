@@ -103,7 +103,7 @@ def depthFirstSearch(problem):
                 return actions
 
             for nextState, action, cost in problem.getSuccessors(currentState):
-                newAction = action + [action]
+                newAction = actions + [action]
                 fringe.push((nextState, newAction))
 
 
