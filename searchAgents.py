@@ -511,9 +511,6 @@ def foodHeuristic(state, problem):
     # return min(distance)  # Gets 2/4 on autograder but expands 12517 nodes"
 
 
-
-
-
 class ClosestDotSearchAgent(SearchAgent):
     "Search for all food using a sequence of searches"
 
