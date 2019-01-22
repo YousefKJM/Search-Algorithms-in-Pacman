@@ -115,7 +115,6 @@ def breadthFirstSearch(problem):
     if problem.isGoalState(initialState):
         return []
     fringe = util.Queue()
-    print(initialState)
     visitedState = []
     fringe.push((initialState, []))
 
@@ -188,3 +187,51 @@ bfs = breadthFirstSearch
 dfs = depthFirstSearch
 astar = aStarSearch
 ucs = uniformCostSearch
+# ------------------------------------------------------------------------------
+# 5/4 - expanded node: 4299
+# foodList = foodGrid.asList()
+#
+# problem.heuristicInfo['wallCount'] = problem.walls.count()
+#
+# if problem.isGoalState(state):
+#     return 0
+#
+# # Find real distances between position and all of the food #
+# distance = []
+# flag = 0
+#
+# for item in foodList:
+#     distance.append(mazeDistance(position, item, problem.startingGameState))
+#
+#     # If we have a difficult maze stop search #
+#     if flag == 4 and problem.heuristicInfo['wallCount'] > 20:
+#         break
+#
+#     flag += 1
+#
+# return max(distance)
+# ------------------------------------------------------------------------------
+# the best one, found in 2 min - expanded nodes: 376
+# currNode = problem.startingGameState
+# foodList = foodGrid.asList()
+#
+# foodList2 = []
+# if len(foodList) > 1:
+#     for foodA in foodList:
+#         foodList2.append(max([(mazeDistance(foodA, foodB, currNode), foodA, foodB) for foodB in foodList]))
+#
+#     foodList3 = max(foodList2)
+#     AtoB = foodList3[0]
+#     pacToA = mazeDistance(position, foodList3[1], currNode)
+#     pacToB = mazeDistance(position, foodList3[2], currNode)
+#
+#     if pacToA < pacToB:
+#         return pacToA + AtoB
+#     else:
+#         return pacToB + AtoB
+# elif len(foodList) == 1:
+#     food = foodList[0]
+#     return abs( position[0] - food[0] ) + abs( position[1] - food[1] )
+# else:
+#     return 0
+# ------------------------------------------------------------------------------
