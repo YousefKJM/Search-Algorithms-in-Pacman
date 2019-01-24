@@ -1,0 +1,17 @@
+Index: searchAgents.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchAgents.py	(date 1548160673000)
++++ searchAgents.py	(date 1548160898911)
+@@ -511,9 +511,6 @@
+     # return min(distance)  # Gets 2/4 on autograder but expands 12517 nodes"
+ 
+ 
+-
+-
+-
+ class ClosestDotSearchAgent(SearchAgent):
+     "Search for all food using a sequence of searches"
+ 
