@@ -306,22 +306,13 @@ class CornersProblem(search.SearchProblem):
         """
         "*** YOUR CODE HERE ***"
         return self.startingPosition, []
-        util.raiseNotDefined()
 
     def isGoalState(self, state):
         """
         Returns whether this search state is a goal state of the problem.
         """
         "*** YOUR CODE HERE ***"
-        node = state[0]
-        visitedCorners = state[1]
-
-        if node in self.corners:
-            if not node in visitedCorners:
-                visitedCorners.append(node)
-            return len(visitedCorners) == 4
-        return False
-        util.raiseNotDefined()
+        return len(state[1]) == len(self.corners)
 
     def getSuccessors(self, state):
         """
@@ -344,6 +335,14 @@ class CornersProblem(search.SearchProblem):
             #   hitsWall = self.walls[nextx][nexty]
 
             "*** YOUR CODE HERE ***"
+            x, y = state[0]
+            dx, dy = Actions.directionToVector(action)
+            nextx, nexty = int(x + dx), int(y + dy)
+            if not self.walls[nextx][nexty]:
+                if (nextx, nexty) in self.corners and (nextx, nexty) not in state[1]:
+                    successors.append((((nextx, nexty), state[1]+[(nextx, nexty)]), action, 1))
+                else:
+                    successors.append((((nextx, nexty), state[1]), action, 1))
 
         self._expanded += 1  # DO NOT CHANGE
         return successors
@@ -379,7 +378,28 @@ def cornersHeuristic(state, problem):
     walls = problem.walls  # These are the walls of the maze, as a Grid (game.py)
 
     "*** YOUR CODE HERE ***"
-    return 0  # Default to trivial solution
+    cornerList = []
+    from util import manhattanDistance
+    x = 0
+    while x < 4:
+        cornerList.append(corners[x])
+        x += 1
+    cornersConsidered = list(set(cornerList) - set(state[1]))
+    startingpos = state[0]
+    distance = 0
+    while len(cornersConsidered) != 0:
+        mindis = manhattanDistance(startingpos, cornersConsidered[0])
+        mincorner = cornersConsidered[0]
+        for corner in cornersConsidered:
+            temp = manhattanDistance(startingpos, corner)
+            if temp < mindis:
+                mindis = temp
+                mincorner = corner
+        cornersConsidered.remove(mincorner)
+        startingpos = mincorner
+        distance = distance + mindis
+
+    return distance  # Default to trivial solution
 
 
 class AStarCornersAgent(SearchAgent):
@@ -512,7 +532,7 @@ def foodHeuristic(state, problem):
 
 
 class ClosestDotSearchAgent(SearchAgent):
-    "Search for all food using a sequence of searches"
+    """Search for all food using a sequence of searches"""
 
     def registerInitialState(self, state):
         self.actions = []
